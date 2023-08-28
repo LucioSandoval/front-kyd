@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FormLayoutDemoComponent } from './formlayoutdemo.component';
-import { FormLayoutDemoRoutingModule } from './formlayoutdemo-routing.module';
+import { EmployeeComponent } from './employee.component';
+import { EmployeeRoutingModule } from './employee-routing.module';
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { CalendarModule } from "primeng/calendar";
 import { ChipsModule } from "primeng/chips";
@@ -13,12 +13,13 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
 import { MultiSelectModule } from "primeng/multiselect";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { InputTextModule } from "primeng/inputtext";
-
+import { PasswordModule } from 'primeng/password';
+import { TableModule } from 'primeng/table';
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
-		FormLayoutDemoRoutingModule,
+		EmployeeRoutingModule,
 		AutoCompleteModule,
 		CalendarModule,
 		ChipsModule,
@@ -28,8 +29,10 @@ import { InputTextModule } from "primeng/inputtext";
 		CascadeSelectModule,
 		MultiSelectModule,
 		InputTextareaModule,
-		InputTextModule
+		InputTextModule,
+        PasswordModule,
+        TableModule,
 	],
-	declarations: [FormLayoutDemoComponent]
+	declarations: [EmployeeComponent]
 })
-export class FormLayoutDemoModule { }
+export class EmployeeModule { }

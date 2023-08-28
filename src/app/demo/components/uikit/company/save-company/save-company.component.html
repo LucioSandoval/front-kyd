@@ -1,0 +1,105 @@
+<div class="grid">
+    <div class="col-12 ">
+
+        <div class="card">
+            <h5 style="text-align: center; font-weight: bold; font-size: 3rem;">Formulario Empresa</h5>
+            <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+                <div class="p-fluid p-formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="name">Nombre</label>
+                        <input pInputText id="name" type="text" formControlName="name"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['name'].errors">
+                            <div *ngIf="formControls.name.errors.required">
+                                    El campo 'Nombre' es requerido.
+                            </div>
+                        </small>
+
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="email1">Correo</label>
+                        <input pInputText id="email1" type="text" formControlName="email" />
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['email'].errors">
+                            <div *ngIf="formControls.email.errors.required">
+                                    El campo 'Correo' es requerido.
+                            </div>
+                        </small>
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="address">Dirección</label>
+                        <input pInputText id="address" type="text" formControlName="address"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['address'].errors">
+                            <div *ngIf="formControls.address.errors.required">
+                                    El campo 'Dirección' es requerido.
+                            </div>
+                        </small>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="rut">Rut</label>
+                        <input pInputText id="rut" type="text" formControlName="rut"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['rut'].errors">
+                            <div *ngIf="formControls.rut.errors.required">
+                                    El campo 'Rut' es requerido.
+                            </div>
+                        </small>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="ciudad">Ciudad</label>
+                        <input pInputText id="ciudad" type="text" formControlName="city"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['city'].errors">
+                            <div *ngIf="formControls.city.errors.required">
+                                    El campo 'Ciudad' es requerido.
+                            </div>
+                        </small>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="faena">Faena</label>
+                        <input pInputText id="faena" type="text" formControlName="faena"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['faena'].errors">
+                            <div *ngIf="formControls.faena.errors.required">
+                                    El campo 'Faena' es requerido.
+                            </div>
+                        </small>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="numero">Número Contrato</label>
+                        <input pInputText id="numero" type="text" formControlName="contract_number"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['contract_number'].errors">
+                            <div *ngIf="formControls.contract_number.errors.required">
+                                    El campo 'Número Contrato' es requerido.
+                            </div>
+                        </small>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="age1">Contraseña</label>
+                        <p-password [feedback]="false" formControlName="password"></p-password>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['password'].errors">
+                            <div *ngIf="formControls.password.errors.required">
+                                    El campo 'Contraseña' es requerido.
+                            </div>
+                        </small>
+                    </div>
+                    <button pButton pRipple type="submit" label="GUARDAR" class="p-button-raised"
+                        icon="pi pi-save"></button>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>

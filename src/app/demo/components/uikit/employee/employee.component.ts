@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-    templateUrl: './formlayoutdemo.component.html'
+    templateUrl: './employee.component.html'
 })
-export class FormLayoutDemoComponent {
+export class EmployeeComponent implements OnInit {
+    ngOnInit(): void {
+        
+    }
 
     selectedState: any = null;
 
