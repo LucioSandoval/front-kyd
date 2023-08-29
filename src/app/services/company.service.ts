@@ -45,10 +45,7 @@ export class CompanyService {
     }
 
     public deleteCompany(id: string): Observable<Object> {
-        const  ruta: string  = DELETE_COMPANY+id
-        console.log("eliminar");
-        console.log(ruta);//DELETE_COMPANY+id
-        return this.http.delete<Object>(ruta);
+        return this.http.delete<Object>(DELETE_COMPANY+id);
     }
 
 }

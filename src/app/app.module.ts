@@ -27,7 +27,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        MessageService, ConfirmationService,
+        MessageService, ConfirmationService, 
         PhotoService, ProductService
 
     ],

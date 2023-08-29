@@ -1,15 +1,11 @@
-import { Message } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { dE } from '@fullcalendar/core/internal-common';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { CompanyDto } from 'src/app/models/dto/company-dto.model';
 import { CompanyProjection } from 'src/app/models/projections/company-projection.model';
 import { CompanyService } from 'src/app/services/company.service';
-import { GlobalToasts, ToasMessageService, ToastMessageSeverity } from 'src/app/services/toas-message.service';
-
-
 @Component({
   selector: 'app-save-company',
   templateUrl: './save-company.component.html',
@@ -23,7 +19,7 @@ export class SaveCompanyComponent implements OnInit {
     public loading: boolean;
     private id: string;
     constructor(private formBuilder: FormBuilder,
-        private toastMessageService : ToasMessageService,
+        private messageService: MessageService,
         private route: ActivatedRoute,
         private companyService: CompanyService,
         private router: Router){
@@ -64,7 +60,8 @@ export class SaveCompanyComponent implements OnInit {
      * @returns retorna un formGroup
     */
     private initCompanyForm(): FormGroup {
-        //this.submittedForm = false;
+        this.submittedForm = false;
+        this.loading = false;
         this.error = '';
         return this.formBuilder.group({
             name: ['', [Validators.required, Validators.maxLength(200)]],
@@ -87,20 +84,15 @@ export class SaveCompanyComponent implements OnInit {
 
     public onSubmit(){
          this.submittedForm = true;
-         this.loading = true;
+
 
         if (this.companyForm.invalid) {
             console.log('Formulario inválido');
             console.log(this.companyForm)
-            this.toastMessageService.showToastMessage(
-                GlobalToasts.TOAST_DASHBOAD,
-                ToastMessageSeverity.SEVERITY_WARN,
-                "Advertencia",
-                "Hay campos requeridos sin completar");
-
+            this.messageService.add({ key: 'tst', severity: 'warn', summary: 'Advertencia', detail: 'Hay campos requeridos sin completar.' });
             return;
         }
-
+        this.loading = true;
         const companyDto: CompanyDto = this.mapperCompanyFormToCompanyDto();
 
         if (this.modo.includes('save')){
@@ -141,28 +133,18 @@ export class SaveCompanyComponent implements OnInit {
     }
 
     private manipulateSuccessSaveCompany(){
-
-        this.toastMessageService.showToastMessage(
-            GlobalToasts.TOAST_DASHBOAD,
-            ToastMessageSeverity.SEVERITY_SUCCESS,
-            "Éxito",
-            "Se ha agregado la empresa con éxito");
+        this.messageService.add({ key: 'tst', severity: 'success', summary: 'Éxito', detail: 'Se ha agregado la empresa con éxito.' });
+        this.loading = false;
         setTimeout(() => {
             this.router.navigate(['/uikit/table']);
-        }, 1000);
+        }, 500);
 
 
     }
 
 
     private manipulateErrorSaveCompany(error: any): Observable<null>{
-        this.toastMessageService.showToastMessage(
-            GlobalToasts.TOAST_DASHBOAD,
-            ToastMessageSeverity.SEVERITY_ERROR,
-            "Error",
-            "Hubo un error al intentar agregar la empresa"
-        );
-
+        this.messageService.add({ key: 'tst', severity: 'error', summary: 'Érror', detail: 'Hubo un error al intentar agregar la empresa.' });
         return of(null);
     }
 
@@ -180,40 +162,26 @@ export class SaveCompanyComponent implements OnInit {
 
     private manipulateErrorInitCompany(error:any){
         console.log(error);
-        this.toastMessageService.showToastMessage(
-            GlobalToasts.TOAST_DASHBOAD,
-            ToastMessageSeverity.SEVERITY_ERROR,
-            "Error",
-            "Hubo un error al intentar cargar la empresa, por favor intente nuevamente. Si el error persiste comunicarse inmediatamente con el administrador."
-        );
-        setTimeout(() => {
-            this.router.navigate(['/uikit/table']);
-        }, 1000);
+        this.messageService.add({ key: 'tst', severity: 'error', summary: 'Érror', detail: 'Hubo un error al intentar cargar la empresa, por favor intente nuevamente. Si el error persiste comunicarse inmediatamente con el administrador.' });
+        this.router.navigate(['/uikit/table']);
         return of(null);
     }
 
     private manipulateSuccessUpdateCompany() {
 
-        this.toastMessageService.showToastMessage(
-            GlobalToasts.TOAST_DASHBOAD,
-            ToastMessageSeverity.SEVERITY_SUCCESS,
-            "Éxito",
-            "La empresa se ha actualizado con éxito");
+        this.messageService.add({ key: 'tst', severity: 'success', summary: 'Éxito', detail: 'La empresa se ha actualizado con éxito.' });
+
         this.loading = false;
 
         setTimeout(() => {
             this.router.navigate(['/uikit/table']);
-        }, 1000);
+        }, 500);
 
     }
 
     private manipulateErrorUpdateCompany(error: any) {
-       const message = error?error.error.message: 'Hubo un error al actualizar la empresa';
-        this.toastMessageService.showToastMessage(
-            GlobalToasts.TOAST_DASHBOAD,
-            ToastMessageSeverity.SEVERITY_ERROR,
-            "Error",
-            "Hubo un error al actualizar la empresa");
+       //const message = error?error.error.message: 'Hubo un error al actualizar la empresa';
+        this.messageService.add({ key: 'tst', severity: 'error', summary: 'Érror', detail: 'Hubo un error al actualizar la empresa.' });
         this.loading = false;
         console.log("Error al guardar cambios en company..." + JSON.stringify(error));
         return of([]);

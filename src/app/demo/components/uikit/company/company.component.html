@@ -85,10 +85,10 @@
 						</td>
                         <td>
                             <button pButton label="Editar" class="p-button-rounded p-button-success mr-2"
-                                icon="pi pi-pencil" (click)="updateCompany(company)">
+                            [loading]="loading" icon="pi pi-pencil" (click)="updateCompany(company)">
                             </button>
                             <button pButton label="Eliminar" class="p-button-rounded p-button-danger"
-                            icon="pi pi-trash" (click)="deleteCompany($event,company)"  pTooltip="Eliminar Empresa">
+                            [loading]="loading" icon="pi pi-trash" (click)="deleteCompany($event,company)"  pTooltip="Eliminar Empresa">
                         </button>
 
                         </td>
@@ -111,5 +111,5 @@
 
 
 </div>
-<p-toast key="toastDasboard"></p-toast>
+<p-toast key="tst"></p-toast>
 <p-confirmPopup></p-confirmPopup>

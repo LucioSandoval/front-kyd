@@ -105,7 +105,7 @@
                         </small>
                     </div>
                     <button pButton pRipple type="submit" label="GUARDAR" class="p-button-raised"
-                      icon="pi pi-save"></button>
+                    [loading]="loading" [disabled]="loading"  icon="pi pi-save"></button>
                 </div>
             </form>
         </div>
@@ -114,4 +114,4 @@
     </div>
 
 </div>
-
+<p-toast key="tst"></p-toast>
