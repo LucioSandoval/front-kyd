@@ -11,7 +11,7 @@
 
                         <small class="invalid" *ngIf="submittedForm && formControls['name'].errors">
                             <div *ngIf="formControls.name.errors.required">
-                                    El campo 'Nombre' es requerido.
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
                             </div>
                         </small>
 
@@ -22,7 +22,8 @@
 
                         <small class="invalid" *ngIf="submittedForm && formControls['email'].errors">
                             <div *ngIf="formControls.email.errors.required">
-                                    El campo 'Correo' es requerido.
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
                             </div>
                         </small>
                     </div>
@@ -33,8 +34,9 @@
                         <input pInputText id="address" type="text" formControlName="address"/>
 
                         <small class="invalid" *ngIf="submittedForm && formControls['address'].errors">
-                            <div *ngIf="formControls.address.errors.required">
-                                    El campo 'Dirección' es requerido.
+                            <div *ngIf="formControls.address.errors.required"><!-- El campo 'Dirección' es requerido. -->
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
                             </div>
                         </small>
                     </div>
@@ -45,7 +47,12 @@
 
                         <small class="invalid" *ngIf="submittedForm && formControls['rut'].errors">
                             <div *ngIf="formControls.rut.errors.required">
-                                    El campo 'Rut' es requerido.
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
+                            </div>
+                            <div *ngIf="formControls.rut.errors?.pattern">
+                                <p-message severity="error" text="El rut no posee un formato válido."></p-message>
+
                             </div>
                         </small>
                     </div>
@@ -56,7 +63,8 @@
 
                         <small class="invalid" *ngIf="submittedForm && formControls['city'].errors">
                             <div *ngIf="formControls.city.errors.required">
-                                    El campo 'Ciudad' es requerido.
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
                             </div>
                         </small>
                     </div>
@@ -67,7 +75,8 @@
 
                         <small class="invalid" *ngIf="submittedForm && formControls['faena'].errors">
                             <div *ngIf="formControls.faena.errors.required">
-                                    El campo 'Faena' es requerido.
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
                             </div>
                         </small>
                     </div>
@@ -78,7 +87,8 @@
 
                         <small class="invalid" *ngIf="submittedForm && formControls['contract_number'].errors">
                             <div *ngIf="formControls.contract_number.errors.required">
-                                    El campo 'Número Contrato' es requerido.
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
                             </div>
                         </small>
                     </div>
@@ -89,12 +99,13 @@
 
                         <small class="invalid" *ngIf="submittedForm && formControls['password'].errors">
                             <div *ngIf="formControls.password.errors.required">
-                                    El campo 'Contraseña' es requerido.
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
                             </div>
                         </small>
                     </div>
                     <button pButton pRipple type="submit" label="GUARDAR" class="p-button-raised"
-                        icon="pi pi-save"></button>
+                      icon="pi pi-save"></button>
                 </div>
             </form>
         </div>
@@ -103,3 +114,4 @@
     </div>
 
 </div>
+

@@ -10,6 +10,7 @@ import { catchError, of, tap } from 'rxjs';
 import { CompanyProjection } from 'src/app/models/projections/company-projection.model';
 import { Router } from '@angular/router';
 import { MessagesDemoComponent } from '../messages/messagesdemo.component';
+import { GlobalToasts, ToasMessageService, ToastMessageSeverity } from 'src/app/services/toas-message.service';
 
 interface expandedRows {
     [key: string]: boolean;
@@ -32,14 +33,14 @@ export class companyComponent implements OnInit {
     constructor(private router: Router,
 
         private companyService:CompanyService,
+        private confirmationService: ConfirmationService,
+        private toastMessageService : ToasMessageService,
         ) {
 
             this.companies=[]
         }
 
     ngOnInit() {
-
-
         this.initCompany();
     }
 
@@ -83,28 +84,62 @@ export class companyComponent implements OnInit {
         });
     }
 
-    public deleteCompany(company:CompanyProjection):void{
-        this.companyService.deleteCompany(company._id).pipe(
-            tap(() => this.successDeleteUsuario(company)),
-            catchError(error => this.errorDeleteUsuario(error))
-        ).subscribe(response => console.log(JSON.stringify(response)));
+    public deleteCompany(event: Event, company:CompanyProjection):void{
+
+        this.toastMessageService.showToastMessage(
+            GlobalToasts.TOAST_DASHBOAD,
+            ToastMessageSeverity.SEVERITY_ERROR,
+            "Érror",
+            "Ha habido un error al intentar eliminar la empresa.");
+        this.confirmationService.confirm({
+            target: event.target,
+            acceptLabel: 'Sí',
+            message: 'Está seguro/a que desea eliminar esta empresa?',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.companyService.deleteCompany(company._id).pipe(
+                    tap(() => this.manipulateSuccessDeleteCompany(company)),
+                    catchError(error => this.manipulateErrorDeleteCompany(error))
+                ).subscribe();
+            },
+            reject: () => {
+
+                return false;
+
+            }
+        });
 
 
     }
 
-    private successDeleteUsuario(company: CompanyProjection) {
+    private manipulateSuccessDeleteCompany(company: CompanyProjection) {
 
-        //this.toastMessageService.showToastMessage(GlobalToasts.BACK_OFFICE, ToastMessageSeverity.SEVERITY_SUCCESS, "Éxito", "Se ha eliminado el usuario con éxito.");
+        this.toastMessageService.showToastMessage(
+            GlobalToasts.TOAST_DASHBOAD,
+            ToastMessageSeverity.SEVERITY_SUCCESS,
+            "Éxito", "Se ha eliminado la empresa con éxito."
+        );
+        setTimeout(()=>{
+            alert("eliminado");
+        },1000)
+
         this.companies.splice(this.companies.indexOf(company),1);
-        alert("Eliminado")
-        this.loading = false;
+
+
+
+        //this.loading = false;
     }
 
-    private errorDeleteUsuario(error: any) {
+    private manipulateErrorDeleteCompany(error: any) {
 
-        //this.toastMessageService.showToastMessage(GlobalToasts.BACK_OFFICE, ToastMessageSeverity.SEVERITY_ERROR, "Érror", "Ha habido un error al intentar eliminar el usuario.");
-        //this.loading = false;
         console.log("error al eliminar company ",JSON.stringify(error));
+        this.toastMessageService.showToastMessage(
+            GlobalToasts.TOAST_DASHBOAD,
+            ToastMessageSeverity.SEVERITY_ERROR,
+            "Érror",
+            "Ha habido un error al intentar eliminar la empresa.");
+        //this.loading = false;
+
         return of([]);
     }
 }

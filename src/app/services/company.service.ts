@@ -41,12 +41,14 @@ export class CompanyService {
     public updateCompany( id: string, companyDto: CompanyDto): Observable<CompanyDto> {
         console.log('el companyForm editado  es: ');
         console.log(companyDto);
-        return this.http.put<CompanyDto>(UPDATE_COMPANY + id,companyDto,);
+        return this.http.patch<CompanyDto>(UPDATE_COMPANY + id,companyDto,);
     }
 
     public deleteCompany(id: string): Observable<Object> {
-
-        return this.http.get<Object>(DELETE_COMPANY+id);
+        const  ruta: string  = DELETE_COMPANY+id
+        console.log("eliminar");
+        console.log(ruta);//DELETE_COMPANY+id
+        return this.http.delete<Object>(ruta);
     }
 
 }

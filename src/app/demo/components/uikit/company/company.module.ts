@@ -26,10 +26,12 @@ import { PasswordModule } from 'primeng/password';
 import { ChartModule } from 'primeng/chart';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { MessageModule } from 'primeng/message';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 @NgModule({
 	imports: [
-
+        MessageModule,
 		CommonModule,
 		CompanyRoutingModule,
 		FormsModule,
@@ -45,6 +47,7 @@ import { DialogModule } from 'primeng/dialog';
 		DropdownModule,
 		ProgressBarModule,
 		ToastModule,
+        ConfirmPopupModule,
         CommonModule,
 		FormsModule,
 		EmployeeRoutingModule,

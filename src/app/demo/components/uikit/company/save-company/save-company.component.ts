@@ -1,3 +1,4 @@
+import { Message } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +7,8 @@ import { Observable, catchError, of, tap } from 'rxjs';
 import { CompanyDto } from 'src/app/models/dto/company-dto.model';
 import { CompanyProjection } from 'src/app/models/projections/company-projection.model';
 import { CompanyService } from 'src/app/services/company.service';
+import { GlobalToasts, ToasMessageService, ToastMessageSeverity } from 'src/app/services/toas-message.service';
+
 
 @Component({
   selector: 'app-save-company',
@@ -17,12 +20,15 @@ export class SaveCompanyComponent implements OnInit {
     public companyForm: FormGroup;
     public error: string;
     private modo: string;
+    public loading: boolean;
     private id: string;
     constructor(private formBuilder: FormBuilder,
+        private toastMessageService : ToasMessageService,
         private route: ActivatedRoute,
         private companyService: CompanyService,
         private router: Router){
         this.submittedForm = false;
+        this.loading= false;
         this.error = '';
         this.modo='';
         this.id='';
@@ -42,11 +48,11 @@ export class SaveCompanyComponent implements OnInit {
 
     private initCompany(){
         if (this.modo != null && this.modo.includes('edit')) {
-            debugger
+
             this.companyService.findById(this.id)
                 .pipe(
-                    tap(company => this.populatecompanyForm(company)),
-                    catchError(error => this.errorLoadUsuario(error)))
+                    tap(company => this.manipulateSuccessInitCompany(company)),
+                    catchError(error => this.manipulateErrorInitCompany(error)))
                 .subscribe();
         }
     }
@@ -64,13 +70,15 @@ export class SaveCompanyComponent implements OnInit {
             name: ['', [Validators.required, Validators.maxLength(200)]],
             email: ['', [Validators.required, Validators.maxLength(200)]],
             address: ['', [Validators.required, Validators.maxLength(200)]],
-            rut: ['', [Validators.required]],
+            rut: ['', [Validators.required,Validators.pattern(/\b(\d{1,3}(?:(\.?)\d{3}){2}(-?)[\dkK])\b/gm),Validators.maxLength(20)]],
             city: ['', [Validators.required]],
             faena: ['', [Validators.required]],
             contract_number: ['', [Validators.required]],
             password: ['', [Validators.required]],
         });
-    }
+        //Validators.pattern(/\b(\d{1,3}(?:(\.?)\d{3}){2}(-?)[\dkK])\b/gm),Validators.maxLength(20) el posi
+    }    //Validators.pattern('^\\d{7,8}[-][0-9kK]{1}$')
+        //^0*(\d{1,3}(\.?\d{3})*)\-?([\dkK])$/
 
     get formControls() {
         return this.companyForm.controls;
@@ -79,13 +87,20 @@ export class SaveCompanyComponent implements OnInit {
 
     public onSubmit(){
          this.submittedForm = true;
+         this.loading = true;
 
         if (this.companyForm.invalid) {
             console.log('Formulario inválido');
             console.log(this.companyForm)
+            this.toastMessageService.showToastMessage(
+                GlobalToasts.TOAST_DASHBOAD,
+                ToastMessageSeverity.SEVERITY_WARN,
+                "Advertencia",
+                "Hay campos requeridos sin completar");
+
             return;
         }
-        debugger
+
         const companyDto: CompanyDto = this.mapperCompanyFormToCompanyDto();
 
         if (this.modo.includes('save')){
@@ -94,10 +109,11 @@ export class SaveCompanyComponent implements OnInit {
                 tap(() => this.manipulateSuccessSaveCompany()),
                 catchError(error => this.manipulateErrorSaveCompany(error))
             ).subscribe();
+
         }else if(this.modo.includes('edit')){
             this.companyService.updateCompany(this.id, companyDto ).pipe(
-                tap(() => this.successUpdateUsuario()),
-                catchError(error => this.errorUpdateUsuario(error))
+                tap(() => this.manipulateSuccessUpdateCompany()),
+                catchError(error => this.manipulateErrorUpdateCompany(error))
             ).subscribe();
         }
 
@@ -124,24 +140,34 @@ export class SaveCompanyComponent implements OnInit {
         return companyDto;
     }
 
-      private manipulateSuccessSaveCompany(){
+    private manipulateSuccessSaveCompany(){
 
-        this.router.navigate(['/uikit/table']);
+        this.toastMessageService.showToastMessage(
+            GlobalToasts.TOAST_DASHBOAD,
+            ToastMessageSeverity.SEVERITY_SUCCESS,
+            "Éxito",
+            "Se ha agregado la empresa con éxito");
+        setTimeout(() => {
+            this.router.navigate(['/uikit/table']);
+        }, 1000);
 
 
     }
 
 
     private manipulateErrorSaveCompany(error: any): Observable<null>{
-        console.log("Error al crear la empresa..." + JSON.stringify(error));
-
+        this.toastMessageService.showToastMessage(
+            GlobalToasts.TOAST_DASHBOAD,
+            ToastMessageSeverity.SEVERITY_ERROR,
+            "Error",
+            "Hubo un error al intentar agregar la empresa"
+        );
 
         return of(null);
     }
 
-    private populatecompanyForm(company: CompanyProjection):void { // Este método es para poblar el formulario con los datos del
-        // usuario a editar
-        debugger;
+    private manipulateSuccessInitCompany(company: CompanyProjection):void { // Este método es para poblar el formulario con los datos del
+
         this.companyForm.get('name').setValue(company?.name);
         this.companyForm.get('email').setValue(company?.email);
         this.companyForm.get('address').setValue(company?.address);
@@ -152,34 +178,43 @@ export class SaveCompanyComponent implements OnInit {
         this.companyForm.get('password').setValue(company.password);
     }
 
-    private errorLoadUsuario(error:any){
-
+    private manipulateErrorInitCompany(error:any){
         console.log(error);
-
-        /* this.toastMessageService.showToastMessage(
-            GlobalToasts.BACK_OFFICE,
+        this.toastMessageService.showToastMessage(
+            GlobalToasts.TOAST_DASHBOAD,
             ToastMessageSeverity.SEVERITY_ERROR,
             "Error",
-            "Hubo un error al intentar cargar el usuario, por favor intente nuevamente. Si el error persiste comunicarse inmediatamente con el administrador."
+            "Hubo un error al intentar cargar la empresa, por favor intente nuevamente. Si el error persiste comunicarse inmediatamente con el administrador."
         );
-             */
-        this.router.navigate(['/uikit/table']);
-
+        setTimeout(() => {
+            this.router.navigate(['/uikit/table']);
+        }, 1000);
         return of(null);
     }
 
-    private successUpdateUsuario() {
+    private manipulateSuccessUpdateCompany() {
 
-        //this.toastMessageService.showToastMessage(GlobalToasts.BACK_OFFICE, ToastMessageSeverity.SEVERITY_SUCCESS, "Éxito", "El Usuario se ha actualizado con éxito");
-        //this.loading = false;
-        this.router.navigate(['/uikit/table']);
+        this.toastMessageService.showToastMessage(
+            GlobalToasts.TOAST_DASHBOAD,
+            ToastMessageSeverity.SEVERITY_SUCCESS,
+            "Éxito",
+            "La empresa se ha actualizado con éxito");
+        this.loading = false;
+
+        setTimeout(() => {
+            this.router.navigate(['/uikit/table']);
+        }, 1000);
 
     }
 
-    private errorUpdateUsuario(error: any) {
-
-        //this.toastMessageService.showToastMessage(GlobalToasts.BACK_OFFICE, ToastMessageSeverity.SEVERITY_ERROR, "Error", "Hubo un error al actualizar el usuario");
-        //this.loading = false;
+    private manipulateErrorUpdateCompany(error: any) {
+       const message = error?error.error.message: 'Hubo un error al actualizar la empresa';
+        this.toastMessageService.showToastMessage(
+            GlobalToasts.TOAST_DASHBOAD,
+            ToastMessageSeverity.SEVERITY_ERROR,
+            "Error",
+            "Hubo un error al actualizar la empresa");
+        this.loading = false;
         console.log("Error al guardar cambios en company..." + JSON.stringify(error));
         return of([]);
 
