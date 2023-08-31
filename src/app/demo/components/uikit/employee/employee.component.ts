@@ -1,35 +1,48 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { catchError, of, tap } from 'rxjs';
+import { EmployeeProjection } from 'src/app/models/projections/employe-projection.model';
+import { EmployeeService } from 'src/app/services/employee.service';
 
 @Component({
     templateUrl: './employee.component.html'
 })
 export class EmployeeComponent implements OnInit {
-    ngOnInit(): void {
-        
+    public employees:any[];
+
+    constructor(
+        private employeeService:EmployeeService,
+        private messageService: MessageService,
+    ){
+        this.employees = [];
     }
 
-    selectedState: any = null;
+    ngOnInit(): void {
+        this.initEmployees();
+    }
 
-    states: any[] = [
-        {name: 'Arizona', code: 'Arizona'},
-        {name: 'California', value: 'California'},
-        {name: 'Florida', code: 'Florida'},
-        {name: 'Ohio', code: 'Ohio'},
-        {name: 'Washington', code: 'Washington'}
-    ];
+    private initEmployees(): void{
+        debugger;
+        this.employeeService.listEmployees()
+        .pipe(
+        tap(employees => this.manipulateSuccessListEmployees(employees)),
+          catchError(error => this.manipulateErrorListEmployees(error))
+        ).subscribe();
 
-    dropdownItems = [
-        { name: 'Option 1', code: 'Option 1' },
-        { name: 'Option 2', code: 'Option 2' },
-        { name: 'Option 3', code: 'Option 3' }
-    ];
+    }
 
-    cities1: any[] = [];
+    private manipulateSuccessListEmployees(employees: any[]): void {
+        debugger
+        console.log('empleadosss')
+        this.employees = employees;
+        console.log(this.employees);
+    }
 
-    cities2: any[] = [];
+    private manipulateErrorListEmployees(error: any): any {
+        debugger
+        this.messageService.add({ key: 'tst', severity: 'error', summary: 'Érror', detail: 'Hubo un error al intentar cargar los trabjadores, por favor intente nuevamente. Si el error persiste favor de comunicarse inmediatamente con el administrador.' });
 
-    city1: any = null;
-
-    city2: any = null;
+        return of([]);
+    }
 
 }

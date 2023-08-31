@@ -54,7 +54,10 @@ export class companyComponent implements OnInit {
     }
 
     private manipulateErrorListCompany(error: any): any {
-        return alert('Hubo un error');
+       
+        this.messageService.add({ key: 'tst', severity: 'error', summary: 'Érror', detail: 'Hubo un error al intentar cargar las empresas, por favor intente nuevamente. Si el error persiste favor de comunicarse inmediatamente con el administrador.' });
+
+        return of([]);
     }
 
     public newCompany(): void{

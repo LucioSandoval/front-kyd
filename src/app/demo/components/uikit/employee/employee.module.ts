@@ -15,6 +15,8 @@ import { InputTextareaModule } from "primeng/inputtextarea";
 import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from 'primeng/password';
 import { TableModule } from 'primeng/table';
+
+import { ToastModule } from 'primeng/toast';
 @NgModule({
 	imports: [
 		CommonModule,
@@ -23,6 +25,7 @@ import { TableModule } from 'primeng/table';
 		AutoCompleteModule,
 		CalendarModule,
 		ChipsModule,
+        ToastModule,
 		DropdownModule,
 		InputMaskModule,
 		InputNumberModule,
