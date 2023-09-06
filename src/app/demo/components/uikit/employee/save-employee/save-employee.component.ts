@@ -43,7 +43,6 @@ export class SaveEmployeeComponent {
   }
 
   ngOnInit(): void {
-    debugger;
     this.route.queryParams.subscribe(params => {
       this.modo = params['modo'];  // Acceder a las propiedades usando corchetes
       this.rut = params['rut'];      // Acceder a las propiedades usando corchetes
@@ -54,7 +53,6 @@ export class SaveEmployeeComponent {
     
   }
   private findByRutEmployee() {
-    debugger;
     if(this.modo != null && this.modo.includes('edit')){
       this.employeeService.findByRut(this.rut)
           .pipe(
@@ -128,7 +126,6 @@ private manipulateErrorListCompany(error: any): any {
     }
     this.loading = true;
     const employeeDto: EmployeeDto = this.mapperEmployeeFormToEmployeeDto();
-    debugger
     if (this.modo.includes('save')) {
 
       this.employeeService.saveEmployee(employeeDto).pipe(
@@ -198,7 +195,7 @@ private manipulateErrorListCompany(error: any): any {
   } 
 
   private manipulateErrorFindByRutEmployee(error: any) {
-    debugger
+    
     console.log(error);
     this.messageService.add({ key: 'tst', severity: 'error', summary: 'Érror', detail: 'Hubo un error al intentar cargar la empresa, por favor intente nuevamente. Si el error persiste comunicarse inmediatamente con el administrador.' });
     this.router.navigate(['/uikit/formlayout']);

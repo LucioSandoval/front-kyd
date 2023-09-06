@@ -36,7 +36,7 @@ public saveEmployee(employeeDto: EmployeeDto): Observable<EmployeeDto> {
 }
 
 public updateEmployee( id: string, employeeDto: EmployeeDto): Observable<EmployeeDto> {
-    debugger
+    
     console.log('el employeeDto editado  es: ');
     console.log(employeeDto);
     const ruta = UPDATE_EMPLOYEE + id

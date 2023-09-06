@@ -56,7 +56,7 @@ export class EmployeeComponent implements OnInit {
     }
 
     public updateEmployee(employee: EmployeeProjection):void{
-        debugger
+        
         this.router.navigate(['uikit/formlayout/save-employee'],
         { queryParams:
             { modo: 'edit', rut: employee.rut }
@@ -64,7 +64,6 @@ export class EmployeeComponent implements OnInit {
     }
 
     public deleteEmployee(event: Event, employee:EmployeeProjection):void{
-        debugger
         this.confirmationService.confirm({
             target: event.target,
             acceptLabel: 'Sí',
