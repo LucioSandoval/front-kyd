@@ -12,6 +12,7 @@ import { CompanyService } from 'src/app/services/company.service';
   styleUrls: ['./save-company.component.scss']
 })
 export class SaveCompanyComponent implements OnInit {
+        
     public submittedForm: boolean;
     public companyForm: FormGroup;
     public error: string;
@@ -145,6 +146,7 @@ export class SaveCompanyComponent implements OnInit {
 
     private manipulateErrorSaveCompany(error: any): Observable<null>{
         this.messageService.add({ key: 'tst', severity: 'error', summary: 'Érror', detail: 'Hubo un error al intentar agregar la empresa.' });
+        this.loading = false;
         return of(null);
     }
 

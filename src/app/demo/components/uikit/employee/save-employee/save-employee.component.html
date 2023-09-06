@@ -1,0 +1,120 @@
+<div class="grid">
+    <div class="col-12 ">
+        <div class="card">
+            <h5 style="text-align: center; font-weight: bold; font-size: 3rem;">Formulario Trabajador</h5>
+            <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+                <div class="p-fluid p-formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="name">Nombre</label>
+                        <input pInputText id="name" type="text" formControlName="name"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['name'].errors">
+                            <div *ngIf="formControls.name.errors.required">
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+                            </div>
+                        </small>
+
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="rut">Rut</label>
+                        <input pInputText id="rut" type="text" formControlName="rut"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['rut'].errors">
+                            <div *ngIf="formControls.rut.errors.required">
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
+                            </div>
+                            <div *ngIf="formControls.rut.errors?.pattern">
+                                <p-message severity="error" text="El rut no posee un formato válido."></p-message>
+
+                            </div>
+                        </small>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="age">Edad</label>
+                        <input pInputText id="age" type="text" formControlName="age" />
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['age'].errors">
+                            <div *ngIf="formControls.age.errors.required">
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
+                            </div>
+                        </small>
+                    </div>
+
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="scholarship">Beca</label>
+                        <input pInputText id="scholarship" type="text" formControlName="scholarship"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['scholarship'].errors">
+                            <div *ngIf="formControls.scholarship.errors.required"><!-- El campo 'Dirección' es requerido. -->
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
+                            </div>
+                        </small>
+                    </div>
+
+                    
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="post">Post</label>
+                        <input pInputText id="post" type="text" formControlName="post"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['post'].errors">
+                            <div *ngIf="formControls.post.errors.required">
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
+                            </div>
+                        </small>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="id_faena">Empresa</label>
+                        <p-dropdown optionValue="_id" optionLabel="name"
+                        [options]="companies" placeholder="Selececione una empresa" formControlName="id_faena">
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['id_faena'].errors">
+                            <div *ngIf="formControls.id_faena.errors.required">
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
+                            </div>
+                        </small>
+                        </p-dropdown>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="driver_license">Licencia de conducir</label>
+                        <input pInputText id="driver_license" type="text" formControlName="driver_license"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['driver_license'].errors">
+                            <div *ngIf="formControls.driver_license.errors.required">
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
+                            </div>
+                        </small>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="age1">Licencia de conducir válida</label>
+                        <input pInputText id="driver_license" type="text"  formControlName="valid_driver_license"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['valid_driver_license'].errors">
+                            <div *ngIf="formControls.valid_driver_license.errors.required">
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+
+                            </div>
+                        </small>
+                    </div>
+                    <button pButton pRipple type="submit" label="GUARDAR" class="p-button-raised"
+                    [loading]="loading" [disabled]="loading"  icon="pi pi-save"></button>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>
+<p-toast key="tst"></p-toast>

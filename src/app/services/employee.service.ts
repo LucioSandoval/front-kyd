@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EmployeeProjection } from '../models/projections/employe-projection.model';
+import { EmployeeProjection } from '../models/projections/employee-projection.model';
 import { Observable } from 'rxjs';
+import { EmployeeDto } from '../models/dto/employee-dto.model';
 const EMPLOYEE_URL = 'http://localhost:3000';
-const LIST_EMPLOYEE = EMPLOYEE_URL + '/employees/';
-const SAVE_COMPANY = EMPLOYEE_URL + '/employees/create';
-const UPDATE_COMPANY = EMPLOYEE_URL + '/employees/';
-const FIND_BY_COMPANY = EMPLOYEE_URL + '/employees/';
-const DELETE_COMPANY = EMPLOYEE_URL + '/employees/'
+const LIST_EMPLOYEE = EMPLOYEE_URL + '/employees';
+const SAVE_EMPLOYEE = EMPLOYEE_URL + '/employees/create';
+const UPDATE_EMPLOYEE = EMPLOYEE_URL + '/employees/';
+const FIND_BY_EMPLOYEE = EMPLOYEE_URL + '/employees/';
+const DELETE_EMPLOYEE = EMPLOYEE_URL + '/employees/'
 @Injectable({
   providedIn: 'root'
 })
@@ -15,34 +16,35 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-    public listEmployees(): Observable<any[]>{
-        debugger
+    public listEmployees(): Observable<EmployeeProjection[]>{
         const ruta = LIST_EMPLOYEE;
-        return this.http.get<any[]>(ruta);
+        return this.http.get<EmployeeProjection[]>(ruta);
     }
 
-/* public findById(id:string): Observable<CompanyProjection>{
+public findByRut(rut:string): Observable<EmployeeProjection>{
     console.log("en find one")
-    const params : HttpParams = new HttpParams()
+    //const params : HttpParams = new HttpParams()
     //.set(COMPANY_ID,id);
 
-    return this.http.get<CompanyProjection>(FIND_BY_COMPANY+id);
+    return this.http.get<EmployeeProjection>(FIND_BY_EMPLOYEE+rut);
 }
 
-public saveCompany(companyDto: CompanyDto): Observable<CompanyDto> {
-    console.log('el companyForm es: ');
-    console.log(companyDto);
-    return this.http.post<CompanyDto>(SAVE_COMPANY,companyDto);
+public saveEmployee(employeeDto: EmployeeDto): Observable<EmployeeDto> {
+    console.log('el EmployeeDto es: ');
+    console.log(employeeDto);
+    return this.http.post<EmployeeDto>(SAVE_EMPLOYEE,employeeDto);
 }
 
-public updateCompany( id: string, companyDto: CompanyDto): Observable<CompanyDto> {
-    console.log('el companyForm editado  es: ');
-    console.log(companyDto);
-    return this.http.patch<CompanyDto>(UPDATE_COMPANY + id,companyDto,);
+public updateEmployee( id: string, employeeDto: EmployeeDto): Observable<EmployeeDto> {
+    debugger
+    console.log('el employeeDto editado  es: ');
+    console.log(employeeDto);
+    const ruta = UPDATE_EMPLOYEE + id
+    return this.http.patch<EmployeeDto>(ruta,employeeDto,);
 }
 
-public deleteCompany(id: string): Observable<Object> {
-    return this.http.delete<Object>(DELETE_COMPANY+id);
-} */
+public deleteEmployee(id: string): Observable<Object> {
+    return this.http.delete<Object>(DELETE_EMPLOYEE+id);
+} 
 
 }

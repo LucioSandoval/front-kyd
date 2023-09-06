@@ -1,4 +1,4 @@
-export class EmployeeProjection {
+export class EmployeeDto {
     name?:string
     rut?:string
     age?:Number
