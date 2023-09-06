@@ -61,9 +61,6 @@ export class SaveCompanyComponent implements OnInit {
      * @returns retorna un formGroup
     */
     private initCompanyForm(): FormGroup {
-        this.submittedForm = false;
-        this.loading = false;
-        this.error = '';
         return this.formBuilder.group({
             name: ['', [Validators.required, Validators.maxLength(200)]],
             email: ['', [Validators.required, Validators.maxLength(200)]],
@@ -145,6 +142,7 @@ export class SaveCompanyComponent implements OnInit {
 
 
     private manipulateErrorSaveCompany(error: any): Observable<null>{
+        console.log("error al guardar empresa. ",JSON.stringify(error));
         this.messageService.add({ key: 'tst', severity: 'error', summary: 'Érror', detail: 'Hubo un error al intentar agregar la empresa.' });
         this.loading = false;
         return of(null);

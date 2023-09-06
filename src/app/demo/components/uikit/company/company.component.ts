@@ -42,19 +42,17 @@ export class companyComponent implements OnInit {
         this.companyService.listCompany()
         .pipe(
         tap(companies => this.manipulateSuccessListCompany(companies)),
-          catchError(error => this.manipulateErrorListCompany(error))
+        catchError(error => this.manipulateErrorListCompany(error))
         ).subscribe();
 
     }
 
     private manipulateSuccessListCompany(companies: CompanyProjection[]): void {
-
         this.companies = companies;
         console.log(this.companies);
     }
 
     private manipulateErrorListCompany(error: any): any {
-       
         this.messageService.add({ key: 'tst', severity: 'error', summary: 'Érror', detail: 'Hubo un error al intentar cargar las empresas, por favor intente nuevamente. Si el error persiste favor de comunicarse inmediatamente con el administrador.' });
 
         return of([]);
