@@ -6,6 +6,7 @@ import { takeUntil, Subject, tap, catchError, Observable, of } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { LoginDto } from 'src/app/models/dto/login-dto.model';
 import { UserDto } from 'src/app/models/dto/user-dto.model';
+import { LoginResponseProjection } from 'src/app/models/projections/login-response-projection.model';
 import { LoginService } from 'src/app/services/login.service';
 
 
@@ -21,12 +22,12 @@ import { LoginService } from 'src/app/services/login.service';
         }
     `]
 })
-export class LoginComponent implements OnDestroy{
+export class LoginComponent implements OnDestroy{//OnDestroy
     public submittedForm: boolean;
     public error: string;
     public loading: boolean;
     public loginForm: FormGroup;
-
+    public loginResponse: LoginResponseProjection;
     private unsuscribe$: Subject<void> = new Subject();
 
 
@@ -91,18 +92,12 @@ export class LoginComponent implements OnDestroy{
         return loginDto;
     }
 
-    private manipulateSuccessLogin(user: any){ //UserDto
-        debugger
-        if(user.data != null){
-            this.router.navigate(['/home']);
-        }else{
-            this.messageService.add({ key: 'tst', severity: 'warn', summary: 'Advertencia', detail: user.message});
-        }
-
+    private manipulateSuccessLogin(loginResponse: LoginResponseProjection){ //UserDto
+        this.router.navigate(['/home']);
         this.loading = false;
         
         console.log("userrrrr");
-        console.log(user);
+        console.log(loginResponse);
         
         
     }
