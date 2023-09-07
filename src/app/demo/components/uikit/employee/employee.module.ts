@@ -17,14 +17,13 @@ import { PasswordModule } from 'primeng/password';
 import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
-
-
-
+import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
 import { SaveEmployeeComponent } from './save-employee/save-employee.component';
 @NgModule({
 	imports: [
 		CommonModule,
+		TooltipModule,
 		FormsModule,
 		ReactiveFormsModule,
 		EmployeeRoutingModule,
