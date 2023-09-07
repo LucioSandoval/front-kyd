@@ -28,6 +28,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { MessageModule } from 'primeng/message';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
 	imports: [
@@ -36,6 +37,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 		CompanyRoutingModule,
 		FormsModule,
         ReactiveFormsModule,
+		TooltipModule,
 		TableModule,
 		RatingModule,
 		ButtonModule,

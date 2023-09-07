@@ -94,7 +94,7 @@ export class LoginComponent implements OnDestroy{
     private manipulateSuccessLogin(user: any){ //UserDto
         debugger
         if(user.data != null){
-            this.router.navigate(['/uikit/table']);
+            this.router.navigate(['/home']);
         }else{
             this.messageService.add({ key: 'tst', severity: 'warn', summary: 'Advertencia', detail: user.message});
         }

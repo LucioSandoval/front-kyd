@@ -5,7 +5,7 @@
 			<p-table #dt1 [value]="companies" dataKey="_id" [rows]="10"  [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['rut','name','faena','email']" responsiveLayout="scroll">
 				<ng-template pTemplate="caption">
 					<div class="flex justify-content-between flex-column sm:flex-row">
-						<button pButton label="Nueva empresa" class="p-button-outlined mb-2" icon="pi pi-user-plus" (click)="newCompany()"></button>
+						<button pButton label="Agregar empresa" class="p-button-outlined mb-2" icon="pi pi-fw pi-table" (click)="newCompany()"></button>
 
                         <span class="p-input-icon-left mb-2">
 							<i class="pi pi-search"></i>
@@ -85,7 +85,8 @@
 						</td>
                         <td>
                             <button pButton label="Editar" class="p-button-rounded p-button-success mr-2"
-                            [loading]="loading" icon="pi pi-pencil" (click)="updateCompany(company)">
+                            [loading]="loading" icon="pi pi-pencil" 
+							pTooltip="Editar empresa" (click)="updateCompany(company)">
                             </button>
                             <button pButton label="Eliminar" class="p-button-rounded p-button-danger"
                             [loading]="loading" icon="pi pi-trash" (click)="deleteCompany($event,company)"  pTooltip="Eliminar Empresa">

@@ -21,11 +21,11 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
-                label: 'UI Components',
+                label: 'Módulos',
                 items: [
                     { label: 'Empresa', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'] },
                     { label: 'Usuario', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
-                    { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },
+                    /* { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },
                     { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel'] },
                     { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/uikit/invalidstate'] },
                     { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'] },
@@ -39,10 +39,10 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message'] },
                     { label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file'] },
                     { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts'] },
-                    { label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'] }
+                    { label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'] } */
                 ]
             },
-            {
+            /* {
                 label: 'Prime Blocks',
                 items: [
                     { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', routerLink: ['/blocks'], badge: 'NEW' },
@@ -160,7 +160,7 @@ export class AppMenuComponent implements OnInit {
                         label: 'View Source', icon: 'pi pi-fw pi-search', url: ['https://github.com/primefaces/sakai-ng'], target: '_blank'
                     }
                 ]
-            }
+            } */
         ];
     }
 }
