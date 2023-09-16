@@ -5,20 +5,16 @@
             <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
                 <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-6">
-                        <label htmlFor="name">Nombre</label>
-                        <input pInputText id="name" type="text" formControlName="name"/>
-
-                        <small class="invalid" *ngIf="submittedForm && formControls['name'].errors">
-                            <div *ngIf="formControls.name.errors.required">
-                                <p-message severity="error" text="Este campo es requerido."></p-message>
-                            </div>
-                        </small>
-
-                    </div>
-                    <div class="field col-12 md:col-6">
+                        <!-- <div class="p-inputgroup">
+                            <button type="button" pButton label="Search"></button>
+                            <input type="text" pInputText placeholder="Keyword" />
+                        </div> -->
                         <label htmlFor="rut">Rut</label>
-                        <input pInputText id="rut" type="text" formControlName="rut"/>
-
+                        <div class="p-inputgroup">
+                            
+                            <input pInputText id="rut" type="text" formControlName="rut"/>
+                            <button type="button" pButton label="Buscar" (click)="findByRut()"></button>
+                        </div>        
                         <small class="invalid" *ngIf="submittedForm && formControls['rut'].errors">
                             <div *ngIf="formControls.rut.errors.required">
                                 <p-message severity="error" text="Este campo es requerido."></p-message>
@@ -29,11 +25,24 @@
 
                             </div>
                         </small>
+                    </div>    
+
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="name">Nombre</label>
+                        <input pInputText id="name" type="text" formControlName="name"/>
+
+                        <small class="invalid" *ngIf="submittedForm && formControls['name'].errors">
+                            <div *ngIf="formControls.name.errors.required">
+                                <p-message severity="error" text="Este campo es requerido."></p-message>
+                            </div>
+                        </small>
+
                     </div>
+                    
 
                     <div class="field col-12 md:col-6">
                         <label htmlFor="age">Edad</label>
-                        <input pInputText id="age" type="text" formControlName="age" />
+                        <input pInputText id="age" type="number" formControlName="age" />
 
                         <small class="invalid" *ngIf="submittedForm && formControls['age'].errors">
                             <div *ngIf="formControls.age.errors.required">

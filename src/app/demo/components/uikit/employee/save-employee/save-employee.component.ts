@@ -8,6 +8,7 @@ import { CompanyProjection } from 'src/app/models/projections/company-projection
 import { EmployeeProjection } from 'src/app/models/projections/employee-projection.model';
 import { CompanyService } from 'src/app/services/company.service';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { ValidarRutUtil } from 'src/app/util/validar-rut-util';
 
 @Component({
   selector: 'app-save-employee',
@@ -117,7 +118,7 @@ private manipulateErrorListCompany(error: any): any {
   public onSubmit() {
     this.submittedForm = true;
 
-
+    debugger;
     if (this.employeeForm.invalid) {
       console.log('Formulario inválido');
       console.log(this.employeeForm)
@@ -144,6 +145,48 @@ private manipulateErrorListCompany(error: any): any {
 
   }
 
+  public findByRut(){
+    debugger
+    //employeeForm
+    if(this.employeeForm.get('rut')?.invalid){
+      return;
+    }
+
+    const rut = this.employeeForm.get('rut')?.value;
+
+    if(!ValidarRutUtil.validarRut(rut)){
+      this.messageService.add({ key: 'tst', severity: 'warn', summary: 'Advertencia', detail: 'El rut ingresado no es válido.' });
+      return;
+    }
+
+    this.employeeService.findByRut(rut).pipe(
+        tap(employee => this.manipularExitoBuscarPersona(employee)),
+        catchError(error=> this.manipularErrorBuscarPersona(error))
+    ).subscribe();
+
+  }
+  private manipularExitoBuscarPersona(employee : EmployeeProjection | null) : void{
+    debugger
+    if(employee){ //Si la persona existe, poblar formulario
+      this.employeeForm.get('name').setValue(employee?.name);
+      this.employeeForm.get('rut').setValue(employee?.rut);
+      this.employeeForm.get('age').setValue(employee?.age);
+      this.employeeForm.get('scholarship').setValue(employee?.scholarship);
+      this.employeeForm.get('post').setValue(employee.post);
+      this.employeeForm.get('id_faena').setValue(employee.id_faena);
+      this.employeeForm.get('driver_license').setValue(employee.driver_license);
+      this.employeeForm.get('valid_driver_license').setValue(employee.valid_driver_license);
+      return;
+    }
+    this.messageService.add({ key: 'tst', severity: 'warn', summary: '', detail: 'No se ha encontrado un trabajador con ese rut.' });
+  }
+  private manipularErrorBuscarPersona(error : any) : Observable<null>{
+    debugger
+    console.log("Error al employee por rut..." + JSON.stringify(error));
+    this.messageService.add({ key: 'tst', severity: 'error', summary: 'Érror', detail: 'Hubo un error al intentar buscar el trabajador.' });
+    return of(null);
+  }
+
 
   /**
    * Método que mapea el formulario de contrato hito A ContratoHitoGuardarHitoDto
@@ -155,6 +198,7 @@ private manipulateErrorListCompany(error: any): any {
     employeeDto.name = this.employeeForm.get('name')?.value;
     employeeDto.rut = this.employeeForm.get('rut')?.value;
     employeeDto.age = this.employeeForm.get('age')?.value;
+    debugger
     employeeDto.scholarship = this.employeeForm.get('scholarship')?.value;
     
     employeeDto.post = this.employeeForm.get('post')?.value;
@@ -176,6 +220,7 @@ private manipulateErrorListCompany(error: any): any {
 
 
   private manipulateErrorSaveEmployee(error: any): Observable<null> {
+    debugger
     console.log("Error al guardar ..." + JSON.stringify(error));
     this.messageService.add({ key: 'tst', severity: 'error', summary: 'Érror', detail: 'Hubo un error al intentar registrar el trabajador.' });
     this.loading = false;
